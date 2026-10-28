@@ -19,7 +19,7 @@ Use the existing application as before. The SQL package is for reproduction in a
 - Oracle Database 21c XE and SQL*Plus; service XEPDB1 accessible locally.
 - Python 3 and the `oracledb` package. Exact dependency versions were not captured.
 - An empty project schema with CREATE SESSION, CREATE TABLE, CREATE PROCEDURE,
-  CREATE TRIGGER and a suitable tablespace quota, provisioned by the local DBA.
+  CREATE TRIGGER, CREATE VIEW and a suitable tablespace quota, provisioned by the local DBA.
 - Credentials entered interactively; no passwords are included in this repository.
 
 ## Fresh database installation
@@ -45,7 +45,8 @@ Execution order:
 1. `01_tables.sql`: 11 tables and their exported constraints.
 2. `02_sample_data.sql`: current exported data; preserves IDs and date/time precision.
 3. `03_plsql_objects.sql`: 3 functions, 5 procedures, 3 triggers.
-4. `05_verify.sql`: counts, object status and compilation errors.
+4. `06_view_and_index.sql`: read-only summary view and customer lookup index.
+5. `05_verify.sql`: counts, object status and compilation errors.
 
 Data is loaded before triggers to avoid replaying completed tracking events.
 Identity columns temporarily accept explicit values during import, then return to
@@ -110,7 +111,13 @@ possible parent-table edit. No real-time fleet scheduling or comprehensive concu
 capacity enforcement is implemented. The application connects as a schema owner;
 separate least-privilege application roles are not yet implemented.
 
-This package does not claim additional views, security demonstrations, performance
-benchmarks, backup/restore tests or concurrency experiments. These remain separate work
-for the final report. Complete schema/user provisioning and extra standalone indexes
-are not part of the supplied table/source exports.
+Additional evidence now covers the view, index access-path change, savepoints, read isolation,
+row locking, GRANT/REVOKE, additional SQL and disposable DDL. See DEMONSTRATIONS.md.
+No performance timing, deadlock experiment or backup/restore test was performed.
+Complete administrative schema provisioning is still a DBA prerequisite.
+
+## Final evidence
+query_outputs.md was refreshed on 29 October 2026 at 00:32:49 IST.
+The existing installation shows 3 functions, 5 procedures, 3 triggers and 1 view VALID.
+Run on PowerShell without activation: `.\.venv\Scripts\python.exe app.py --capture`.
+New scripts 07 to 09 are demonstrations, not automatic installation steps.

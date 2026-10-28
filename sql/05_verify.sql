@@ -30,7 +30,7 @@ SELECT 'TRACKING_EVENT' AS table_name, COUNT(*) AS actual_count, 9 AS expected_s
 
 SELECT 'TRANSPORT_COST' AS table_name, COUNT(*) AS actual_count, 20 AS expected_snapshot_count FROM TRANSPORT_COST;
 
-SELECT object_name, object_type, status FROM user_objects WHERE object_type IN ('FUNCTION','PROCEDURE','TRIGGER') ORDER BY object_type, object_name;
+SELECT object_name, object_type, status FROM user_objects WHERE object_type IN ('FUNCTION','PROCEDURE','TRIGGER','VIEW') ORDER BY object_type, object_name;
 
 SELECT name, type, line, position, text FROM user_errors ORDER BY name, sequence;
 
@@ -38,7 +38,7 @@ DECLARE
     n NUMBER;
 BEGIN
     SELECT COUNT(*) INTO n FROM user_objects
-    WHERE object_type IN ('FUNCTION','PROCEDURE','TRIGGER') AND status <> 'VALID';
+    WHERE object_type IN ('FUNCTION','PROCEDURE','TRIGGER','VIEW') AND status <> 'VALID';
     IF n > 0 THEN RAISE_APPLICATION_ERROR(-20990, 'Invalid PL/SQL objects; inspect USER_ERRORS.'); END IF;
 END;
 /

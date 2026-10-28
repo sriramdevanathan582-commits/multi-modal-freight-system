@@ -16,5 +16,6 @@ END;
 @@01_tables.sql
 @@02_sample_data.sql
 @@03_plsql_objects.sql
+@@06_view_and_index.sql
 @@05_verify.sql
 PROMPT Installation scripts finished. Review the verification output.
